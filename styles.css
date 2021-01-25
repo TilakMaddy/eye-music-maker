@@ -1,0 +1,244 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%; /* makes 1rem = 10px */
+}
+
+body {
+
+  background:#edf1f4;
+  min-height: 100vh;
+  box-sizing: border-box;
+
+}
+
+.app {
+
+  height: 100vh;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 20rem);
+  justify-content: space-around;
+  place-items: center;
+
+}
+
+.music {
+  outline: none;
+  border: none;
+  position: relative;
+
+
+  width: 14rem;
+  height: 14rem;
+  cursor: pointer;
+
+  border-radius: 24px;
+
+  background: linear-gradient(145deg, #feffff, #d5d9dc);
+  box-shadow:  0.8rem 0.8rem 1.6rem #d1d4d7,
+              -0.8rem -0.8rem 1.6rem #ffffff;
+
+}
+
+.music:active {
+
+  background: #edf1f4;
+  box-shadow:  0.8rem 0.8rem 1.6rem #d1d4d7,
+                -0.8rem -0.8rem 1.6rem #ffffff;
+
+}
+
+/* when the music is being played */
+
+.playing::before {
+
+  content: '';
+  position: absolute;
+  top: 6.5rem;
+  left: 15%;
+  width: 70%;
+  height: 70%;
+  background: #ff3bd8;
+  box-shadow: -6rem -5.5rem 0 #07b2ff;
+  border-radius: 50%;
+  z-index: -2;
+  animation: rotateBackgroundColors 1s linear infinite;
+}
+
+.playing::after {
+
+  content: '';
+  position: absolute;
+  bottom: 6.5rem;
+  left: 15%;
+  width: 70%;
+  height: 70%;
+  background: #8dff08;
+  box-shadow: 6rem 5.5rem 0 #ffeb3b;
+  border-radius: 50%;
+  z-index: -2;
+  animation: rotateBackgroundColors 1s linear infinite;
+
+}
+
+@keyframes rotateBackgroundColors {
+  0% {
+    filter: blur(6rem) hue-rotate(0deg);
+  }
+  100%{
+    filter: blur(6rem) hue-rotate(360deg);
+  }
+}
+
+
+/* Music bars moving up and down */
+
+.barbox {
+  grid-column: span 2;
+  display: flex;
+  flex-direction: row;
+}
+
+.barbox div {
+  position: relative;
+  width: 4rem;
+  height: 20rem;
+  margin: 2rem;
+  overflow: hidden;
+  border-radius: 5000rem;
+  border: 2px solid #edf1f4;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.05), #edf1f4);
+  box-shadow: 1.5rem 1.5rem 2rem rgba(0, 0, 0, 0.1),
+              -1.5rem -1.5rem 2rem #fff,
+              inset -5px -5px 5px rgba(255, 255, 255, 0.5),
+              inset 5px 5px 5px rgba(0, 0, 0, 0.05) ;
+}
+
+.barbox div::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 4rem;
+  box-shadow: 1.5rem 1.5rem 2rem rgba(0, 0, 0, 0.1),
+  -1.5rem -1.5rem 2rem #fff,
+  inset -5px -5px 5px rgba(255, 255, 255, 0.5),
+  inset 5px 5px 5px rgba(0, 0, 0, 0.05) ;
+  z-index: 3;
+}
+
+.barbox div::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3.6rem;
+  height: 3.6rem;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: inset -5px -5px 5px rgba(0, 0, 0, 0.2),
+              0 42rem 0 40rem #2196f3;
+  animation: bars 2.5s ease-in-out infinite;
+  transform: translateY(16rem);
+  animation-delay: calc(-0.5s * var(--i));
+}
+
+@keyframes bars {
+  0% {
+    transform: translateY(16rem);
+    filter: hue-rotate(180deg);
+  }
+  50% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(16rem);
+    filter: hue-rotate(0deg);
+  }
+}
+
+/* initial loader styles */
+.outer-loader {
+  display: grid;
+  background: #edf1f4;
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  top: 0;
+  left: 0;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s;
+  z-index: 5;
+}
+
+.outer-loader.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.loader {
+  position: relative;
+  display: flex;
+  transition: opacity 1s;
+}
+
+.removed {
+  opacity: 0;
+}
+
+.loader span {
+  width: 5rem;
+  height: 30rem;
+  margin: 0 2rem;
+  background: #edf1f4;
+  animation: loading 1.4s linear infinite;
+}
+
+.loader span:nth-child(1) {
+  animation-delay: 0s;
+}
+.loader span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.loader span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+.loader span:nth-child(4) {
+  animation-delay: 0.6s;
+}
+.loader span:nth-child(5) {
+  animation-delay: 0.8s;
+}
+.loader span:nth-child(6) {
+  animation-delay: 1s;
+}
+.loader span:nth-child(7) {
+  animation-delay: 1.2s;
+}
+
+@keyframes loading {
+  0% {
+    box-shadow: 0 0 0 rgba(0, 0, 0, .5);
+    opacity: 0;
+    transform: translatex(-5rem) scale(1);
+  }
+  50%{
+    box-shadow: 0 2rem 5rem rgba(0, 0, 0, .5);
+    opacity: 1;
+    transform: translateX(0) scale(1.2);
+  }
+  100% {
+    box-shadow: 0 0 0 rgba(0, 0, 0, .5);
+    transform: translateX(5rem) scale(1);
+    opacity: 0;
+  }
+}
